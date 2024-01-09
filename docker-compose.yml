@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  node_service:
+    build:
+      context: ./node_api
+      dockerfile: Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+    image: mhapysentimentapi/mhapy_node_img:latest
+    container_name: mhapy-node-container
+    ports:
+      - "4820:4820"
+    networks:
+      - mhapy-sentiment-network
+
+  ml_service:
+    build:
+      context: ./ml_model
+      dockerfile: Dockerfile
+      args:
+        AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+        AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+        DB_HOST: ${DB_HOST}
+        DB_PORT: ${DB_PORT}
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+    image: mhapysentimentapi/mhapy_ml_img:latest
+    container_name: mhapy-ml-container
+    ports:
+      - "5005:5005"
+
+    networks:
+      - mhapy-sentiment-network
+
+  graph_service:
+    build:
+      context: ./graph_sentiment
+      dockerfile: Dockerfile
+      args:
+        DB_HOST: ${DB_HOST}
+        DB_PORT: ${DB_PORT}
+        DB_NAME: ${DB_NAME}
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+    image: mhapysentimentapi/mhapy_graph_img:latest
+    container_name: mhapy-graph-container
+    ports:
+      - "5001:5001"
+    networks:
+      - mhapy-sentiment-network
+
+networks:
+  mhapy-sentiment-network:
+    driver: bridge

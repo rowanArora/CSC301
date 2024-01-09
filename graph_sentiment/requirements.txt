@@ -1,0 +1,6 @@
+dash==2.14.0
+pandas
+plotly==5.17.0
+numpy
+gunicorn
+flask-cors

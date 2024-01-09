@@ -1,0 +1,136 @@
+openapi: 3.0.0
+info:
+  title: Sentiment Analysis Node.js API Controller
+  version: 1.0.0
+  description: A Node.js controller API file for sentiment analysis
+servers:
+  - url: http://54.165.193.93:4820
+    description: Sentiment Analysis Node.js API Server
+
+paths:
+  /journal-text:
+    get:
+      summary: Get journal text data in CSV format.
+      description: Retrieves sentiment journal text data in CSV format from AWS S3 Bucket of the journal text with sentiment and downlaods the file.
+      responses:
+        '200':
+          description: Success. Returns and downloads journal text data in CSV format.
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Data was not found in AWS S3 bucket.
+        '500':
+          description: Internal Server Error.
+
+  /test:
+    get:
+      summary: Test endpoint to confirm the API is running.
+      description: Endpoint to perform a test and return a JSON response with a random number.
+      responses:
+        '200':
+          description: Success. Returns a test JSON message.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "example test json to confirm API is running and returns an output"
+        '500':
+          description: Internal Server Error
+
+
+  /scrape-text:
+    get:
+      summary: Scrape journal text data mhapy API and return JSON.
+      description: Scrapes data from directly from mhapy's API and provides it as a downloadable JSON file.
+      responses:
+        '200':
+          description: Successfully scraped and downloaded journal text data.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: Data not found
+        '500':
+          description: Internal Server Error
+
+  /analyze-sentiment:
+    post:
+      summary: Analyze sentiment of given text of a user and record it, returns a graph.
+      description: Endpoint to analyze sentiment of a text, updates AWS RDS database with results and returns a graph of the users sentiment. Provide text, user_id and time.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+                - user_id
+                - time
+              properties:
+                text:
+                  type: string
+                  description: The text from the user to analyze the sentiment.
+                user_id:
+                  type: string
+                  description: The user ID.
+                time:
+                  type: string
+                  format: date-time
+                  description: The time in ISO 8601 format.
+      responses:
+        '200':
+          description: Successful response with HTML graph in JSON
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  html_content:
+                    type: string
+                    description: HTML content wrapped in JSON
+        '400':
+          description: Bad request, missing or invalid parameters such as text or user_id
+        '500':
+          description: Internal server error
+  
+  /retrieve-graph:
+    post:
+      summary: Retrieve graph HTML based on user_id.
+      description: |
+        Endpoint to retrieve HTML graph content based on the provided user_id. This endpoint initiates a request to an external service (http://mhapy-graph-container:5001/get-graph) using the user_id received in the request body. If the user_id is valid and the external service returns a response, the HTML graph content is sent as a successful response. If the user_id is missing or invalid, a 400 error is returned. In case of failure to fetch data from the external service, a 500 error is returned.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user_id
+              properties:
+                user_id:
+                  type: string
+                  description: The user ID for which the graph content is requested.
+      responses:
+        '200':
+          description: Successful response with HTML graph content.
+          content:
+            text/html:
+              schema:
+                type: string
+                format: binary
+                description: HTML content representing the graph.
+        '400':
+          description: Bad request, missing or invalid parameter for user_id.
+        '500':
+          description: Failed to fetch data or internal server error.
+
+

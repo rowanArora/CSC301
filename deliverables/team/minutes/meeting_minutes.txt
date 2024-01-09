@@ -1,0 +1,188 @@
+Meeting 1 Thursday Sept 21 11:30 - 12:00 with Theophilus
+First Meeting Questions/Clarifications
+
+What exactly is the project description?
+AI Chatbot that interacts with users and collects data
+Trained to endure mental questions
+Assessment to the users for therapies
+Advise the user to download the app and then from the app assign them a specific assignment
+Space between personal virtual space between the therapist and the user
+In the mobile app, we have journaling, describing how they feel at 3am.
+Conversations with the bot and it has been trained to answer their questions
+Human trigger words
+Suicide, jump off
+Trigger an alert to therapist or an alert to peer support group
+
+What we do
+We need to extract text from the mobile app
+from journals
+from ai chatbot
+We need the AI to learn more from the user interactions with it
+Anywhere where they do free text then we will do sentiment analysis
+
+How do therapists use the software?
+Therapist has the API
+We give them the bot as a widget on an API
+They use the API/widget on their own website
+Each therapist has a unique bot
+Anyone on the internet can download the app 
+U can make the therapist as the therapist through the mobile app
+
+Who is the intended user? Is this for individuals looking to improve their mental health or for professionals? If it’s for professionals how do you think they’d use it to help? (user stories)
+Therapist and company both will use the API
+
+Are we scraping data from the app to train the model or from another dataset and then use that model to predict sentiment from user text.
+
+Do we have or need access to the app? What is the current state of the app?
+They have a working app already on the app store
+They have all the data points we just need to give them API
+
+In the project description it mentions notifying the user about overly negative messages how/via what (email, app notification)
+
+Email notification from therapist, want the bot to send notification to user, like whatsapp. Send through the therapist. Users can see analysis in the app.
+
+What type of Graphical reports? Periodically? What library?
+Want a scatterplot on a daily basis
+show trends (line of best fit?)
+Want to filter the report
+
+
+Any preference tech stack?
+Anything works
+Discuss Intellectual property Confidentiality agreement 
+
+We can at least put it on our resume
+Need CEO to confirm other details
+Do you guys have a database to hold the data or do we need to create our own?
+
+Do you have existing data for us to use?
+
+Do you want us to use Docker and Kubernetes containerization?
+GCP
+Azure
+
+What is the minimum viable product? In other words, what is the minimum our work needs to be capable of?
+
+MVP
+At least scraping the data from the journals on the mobile app
+
+Just to be clear there is no UI right?
+Is there a specific language you want us to do this in?
+
+What are the key features of what you would like us to build?
+
+
+
+Want to generate a report/word cloud
+Need to partner with research institutes
+
+
+Make an API
+Scraping 
+
+
+
+
+Meeting 2 Date Sept 28 11:30 - 12:00 with Maro
+To start off, what is your position? Need it for documentation for course
+
+
+What do you guys want us to use Azure or GCP?
+How is the text data stored on GCP/Azure? Is there a preference on how we access it?
+
+Are we scraping the entire app only once to create the ml model initially and then scrape new text entries one by one and predicting on them with the learned model.
+
+Scrape initially to train model then mhapy ping the api with new data to make predictions on and send that back.
+
+
+What do we build actually?
+Are we making two API's (one for scraping all the data and teaching the ml model and the other for taking user input and performing sentiment analysis and keeping track of stats)
+Are we making one API that does everything with multiple endpoints?
+Are we scraping the text data and training the model in one API?
+
+1 API with multiple endpoints. Used when called by mhapy to give predictions and visualizer. 
+
+
+
+Are all the texts we need to scrape on a database already
+YES
+
+Since this is an API, just want to confirm we only perform sentiment analysis on incoming text data to the API. Similarly, only have to make graphs upon request to the API.
+YES
+
+
+Ideally, we’d like to code the text scraping API in Node.js/Express.js and send the data to the database in GCP/Azure. Then we create additional APIs to train/predict/ generate graphs/visualizations
+Python?
+
+
+
+Backend Engineer 
+
+Meeting 3 Date Sept 30 3:00 - 3:30 Chijindu and Theophilus
+
+partner github id
+
+Our partner hasn’t responded to our user stories yet, but we are planning to meet with him on Saturday and will get his feedback on them then. Additionally, the latter half of the readme is 
+
+is the text already stored in database
+
+
+Do you want us to scrape directly from the mobile app? Or do you already have an API that does that… Your backend engineer Maro has said that the text data has stored it in the database already
+
+Don’t need to continuously update model, just make sure they can add to it when we’re done
+
+Use mental health related data to beef up ml if not enough data
+
+Everything already in database
+
+How do we store the prediction data?
+What do you guys want us to use Azure or GCP?
+GCP
+
+Easy to learn model
+
+Kubernetes & Docker 
+
+Multiple API for each feature
+
+fakiyesitheophilus13@gmail.com 
+marookegbero@gmail.com Backend Engineer
+netojaycee@gmail.com GCP inquiries
+
+Meeting 4 Oct 7 2:00 - 2:10 with Theophilus
+Informing the partner on our plans and D2
+Sub teams, roles, and who to get in contact with for database access
+
+
+Meeting 5 Oct 14 11:00 - 11:20 with Theophilus, Maro, and John
+Are you able to provide any text data from the app itself?
+If you are able to provide this data, when and how will you do this?
+We would just like to train the AI model on data from the app itself rather than just the Kaggle data set.
+Update on the progress of D2
+Update on AWS access?
+Do you have an idea of how we should be using it? 
+I don’t want to burn through your credits
+No worries with credits
+Should I be using EKS or just regular ECS
+EKS is preferred
+
+
+Meeting Oct 28 11:00 - 11:30 with Theophilus and Maro
+Tried to get access to the database endpoint
+Requesting to get AWS privileges 
+Further inquiring on their needs for the project
+Getting specifics on each project aspect
+
+Meeting Nov 6 11:00 - 11:30 with Maro
+Finally received endpoint to get the data from their app
+Still having with AWS privileges
+
+Code Demo Nov 11 11:00 - 11:30 with Theophilus and Maro
+Presented a flow chart going over the architecutre of the project
+Went through several demos highlighting the main features of the project
+Partner was ecstatic about the results and was eager to implement into their app
+
+Meeting Nov 25 11:00 - 11:20 with Theophilus and John
+Updated on progress
+Trying to get Amazon SES privileges to send automated emails
+

@@ -1,0 +1,71 @@
+swagger: 2.0
+openapi: 3.0.0
+
+info:
+  title: Compute Sentiment Flask API
+  description: Flask API for computing sentiment analysis and database updates
+  version: 1.0.0
+servers:
+  - url: http://54.165.193.93:5005
+    description: Compute Sentiment Flask API Server
+
+paths:
+  /update-database:
+    post:
+      summary: Update Database Endpoint
+      description: Inserts sentiment data into the PostgreSQL database on AWS RDS for a specified user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: string
+                text:
+                  type: string
+                time:
+                  type: string
+                sentiment:
+                  type: number
+                score:
+                  type: number
+      responses:
+        '200':
+          description: Success. Data successfully inserted into the database.
+        '400':
+          description: Bad Request. Missing data in the request.
+        '500':
+          description: Internal Server Error. Failed to update the database.
+
+  /compute-sentiment:
+    post:
+      summary: Compute Sentiment Endpoint
+      description: Performs the sentiment analysis on text data using a pre-trained model from AWS S3.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+      responses:
+        '200':
+          description: Success. Returns sentiment analysis results.
+        '400':
+          description: Bad Request. Text data is missing in the request.
+        '500':
+          description: Internal Server Error. Failed to perform sentiment analysis.
+
+  /test:
+    get:
+      summary: Test Endpoint
+      description: A test endpoint to verify the availability of the sentiment Flask API.
+      responses:
+        '200':
+          description: Success. Returns a test message.
+        '500':
+          description: Internal Server Error. Failed to process the request.

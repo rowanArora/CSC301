@@ -1,0 +1,8 @@
+Flask 
+numpy 
+pandas 
+gunicorn 
+psycopg2-binary 
+plotly
+flasgger
+flask-cors

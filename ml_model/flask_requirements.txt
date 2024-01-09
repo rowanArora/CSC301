@@ -1,0 +1,10 @@
+Flask
+tensorflow
+numpy
+pandas
+boto3
+gunicorn
+nltk
+psycopg2-binary
+flasgger
+flask-cors
